@@ -1,0 +1,47 @@
+<div class="text-center">
+  <h2>{{blog.title}}</h2>
+ 
+  <p>Created by {{blog.username}} on {{format_date date_created}}</p>
+  <div class="card-body">
+    <p>{{blog.content}}</p>
+  </div>
+
+{{#if post.Comments}}
+    <section class="card">
+      <div class="card-header">
+        <h3>Comments</h3>
+      </div>
+
+      <div class="card-body">
+        {{#each blog.Comments}}
+          <div>
+            <p>
+              {{body}}
+            </p>
+            <p>
+              &mdash; {{User.username}}, {{format_date createdAt}}
+            </p>
+          </div>
+        {{/each}}
+      </div>
+    </section>
+  {{/if}}
+
+  <form id="new-comment-form" class="card">
+    <div class="card-header">
+      <h3>Add New Comment</h3>
+    </div>
+
+    <div class="card-body">
+      <input type="hidden" name="blog-id" value="{{blog.id}}" />
+
+      <label class="form-label" for="comment-text">Comment</label>
+
+      <textarea name="comment-text" class="form-input"></textarea>
+
+      <button type="submit" class="btn">Submit</button>
+    </div>
+  </form>
+</div>
+
+<script src="/js/comment.js"></script>  

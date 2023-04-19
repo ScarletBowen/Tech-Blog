@@ -4,29 +4,52 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Tech Blog</title>
-  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/stylesheets/style.css">
+  <title>Your Blog Posts</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/@blaze/css@x.x.x/dist/blaze/blaze.css">
+  <script type="module" src="https://unpkg.com/@blaze/atoms@x.x.x/dist/blaze-atoms/blaze-atoms.esm.js"></script>
+  <script nomodule="" src="https://unpkg.com/@blaze/atoms@x.x.x/dist/blaze-atoms/blaze-atoms.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
-<body class="flex-column min-100-vh">
-  <nav class="navbar">
-    <ul class="flex-row">
-      <li class="li-inline nav-item"><a href="/">Home</a></li>
-      <li class="li-inline nav-item"><a href="/dashboard">Dashboard</a></li>
-      <li class="li-inline nav-item"><a href="#" id="logout-link">Logout</a></li>
+<body class= "bg-{primary} p-4">
+<div class="container">
+  <nav>
+    <ul class="c-heading u-xlarge">
+      <li><a href="/">Home</a></li>
+      <li><a href="/dashboard">Dashboard</a></li>
+      <li><a href="/login">Login</a></li>
+      <li><a href="#" id="logout">Logout</a></li>
     </ul>
-  </nav>
-  <header class="hero">
-    <h1 class="app-title"><a href="/dashboard">Your Dashboard</a></h1>
-  </header>
+</nav>
 
-  <main class="col-auto">
-    {{{body}}}
-  </main>
+  <header class= "p-4 c-heading u-xlarge ">
+    <h1>Your Blog Posts</h1>
+  </header>
+</div>
+  <section class="blog-posts">
+   {{#each blog as |blog|}}
+    <div class="card">
+      <div class="card-header">
+        <h3>{{blog.title}}</h3>
+      </div>
+
+      <div class="card-body">
+        <p>{{blog.content}}</p>
+      </div>
+
+      <div class="card-footer">
+        <p>Created by {{blog.username}} on {{format_date blog.date_created}}</p>
+        <button class="edit-btn" data-id="{{blog.id}}">Edit</button>
+        <button class="delete-btn" data-id="{{blog.id}}">Delete</button>
+      </div>
+    </div>
+
+        {{/each}}
+  </section>
 
   <footer class="footer flex-row justify-center">
-    <a href="/dashboard/new">➕ New Post</a>
+  <button id="add-post-btn" type="submit"><a id="addHref" href="/dashboard/new">Add a new post</a></button>
   </footer>
 </body>
 

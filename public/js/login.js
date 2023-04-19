@@ -1,52 +1,52 @@
-const loginFormHandler = async (event) => {
-  event.preventDefault();
+// select the login form and add an event listener for submission
+const loginForm = document.querySelector('.login-form');
 
-  // Collect values from the login form
-  const username = document.querySelector('#username-login').value.trim();
-  const password = document.querySelector('#password-login').value.trim();
+loginForm.addEventListener('submit', async (event) => {
+  event.preventDefault(); // prevent the default form submission
 
-  if (email && password) {
-    // Send a POST request to the API endpoint
-    const response = await fetch('/api/users/login', {
-      method: 'POST',
-      body: JSON.stringify({ email, password }),
-      headers: { 'Content-Type': 'application/json' },
-    });
+  // get the values of the username and password fields
+  const username = document.querySelector('#username-input-login').value;
+  const password = document.querySelector('#password-login').value;
 
-    if (response.ok) {
-      // If successful, redirect the browser to the profile page
-      document.location.replace('/dashboard');
-    } else {
-      alert(response.statusText);
-    }
+  // send a request to the server to check the user credentials
+  const response = await fetch('/api/user/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ username, password }),
+  });
+console.log(response);
+  // if the response is successful, redirect to the dashboard
+  if (response.ok) {
+    document.location.replace ('/dashboard');
+  } else {
+    alert('Invalid username or password');
   }
-};
+});
 
-const signupFormHandler = async (event) => {
-  event.preventDefault();
+// select the signup form and add an event listener for submission
+const signupForm = document.querySelector('.signup-form');
+signupForm.addEventListener('submit', async (event) => {
+  event.preventDefault(); // prevent the default form submission
 
-  const username = document.querySelector('#username-signup').value.trim();
-  const password = document.querySelector('#password-signup').value.trim();
+  // get the values of the username and password fields
+  const username = document.querySelector('#username-input-signup').value;
+  const password = document.querySelector('#password-signup').value;
 
-  if (username && password) {
-    const response = await fetch('/api/users', {
-      method: 'POST',
-      body: JSON.stringify({ username, password }),
-      headers: { 'Content-Type': 'application/json' },
-    });
-
-    if (response.ok) {
-      document.location.replace('/dashboard');
-    } else {
-      alert(response.statusText);
-    }
+  // send an AJAX request to the server to create a new user
+  const response = await fetch('/api/user', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ username, password }),
+  });
+  alert('User created');
+  // if the response is successful, redirect to the dashboard
+  if (response.ok) {
+    document.location.replace ('/dashboard');
+  } else {
+    alert('Failed to create user');
   }
-};
-
-document
-  .querySelector('.login-form')
-  .addEventListener('submit', loginFormHandler);
-
-document
-  .querySelector('.signup-form')
-  .addEventListener('submit', signupFormHandler);
+});

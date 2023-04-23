@@ -1,5 +1,5 @@
 <section class="blog-posts">
-   {{#each blog as |blog|}}
+   {{#each blogs as |blog|}}
     <div class="card">
       <div class="card-header">
         <h3>{{title}}</h3>
@@ -13,14 +13,14 @@
         <p>Created by {{user.username}} on {{format_date date_created}}</p>
       </div>
 
-{{> comments this.comments }}
-
-    <div class="comment-form" style="display: none;">
+{{> comments blog.comments }}
+    <div class="comment-form">
       <form action="/blog/{{blog.id}}/comment" method="POST">
-        <textarea name="content" placeholder="Write a comment"></textarea>
-        <button type="submit">Submit</button>
-    </form>
-  </div>
+        <textarea name="comment-content" placeholder="Write a comment"></textarea>
+        <input type="hidden" name="blog-id" value="{{blog.id}}">
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+    </div>
 
     </div>
 
@@ -28,7 +28,6 @@
 
    {{/each}}
   </section>
-<script src="/js/logout.js"></script>
 <script src="/js/comment.js"></script>
 
 

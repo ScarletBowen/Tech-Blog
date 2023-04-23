@@ -1,17 +1,15 @@
-{{ Path: views/partials/comments.handlebars }}
-
-{{#each this as |comment|}} 
+{{#each comments as |comment|}} 
   <div class="card">
     <div class="card-header">
-      <h3>{{comment.user.username}}</h3>
+      <h3>{{user.username}}</h3>
     </div>
 
     <div class="card-body">
-      <p>{{comment.comment_text}}</p>
+      <p>{{comment_text}}</p>
     </div>
 
     <div class="card-footer">
-      <p>Created on {{format_date comment.date_created}}</p>
+      <p>Created on {{format_date date_created}}</p>
     </div>
   </div>
 {{/each}}

@@ -55,6 +55,20 @@ h1 {
   border-radius: 10px;
 }
 
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  align-self: flex-end;
+  padding: 2rem;
+  background-color: #a6bdd0;
+  border-radius: 10px;
+}
+.comment-form textarea {
+  width: 100%;
+  max-width: 500px; /* Optional: Set a maximum width */
+}
+
 footer {
   margin-top: 2rem;
   text-align: center;

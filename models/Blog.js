@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
+const Comment = require('./Comment');
 
 class Blog extends Model {}
 
@@ -16,7 +17,8 @@ Blog.init(
       allowNull: false,
     },
     content: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
+      allowNull: false
     },
     date_created: {
       type: DataTypes.DATE,
@@ -33,11 +35,17 @@ Blog.init(
   },
   {
     sequelize,
+    modelName: 'blog',
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'blog',
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
   }
 );
+
+Blog.hasMany(Comment, { foreignKey: 'blog_id' });
+Comment.belongsTo(Blog, { foreignKey: 'blog_id' });
+
 
 module.exports = Blog;

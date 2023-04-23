@@ -4,26 +4,29 @@ const newFormHandler = async (event) => {
   const title = document.querySelector('input[name="blog-title"]').value.trim();
   const body = document.querySelector('textarea[name="blog-content"]').value.trim();
 
-  const token = localStorage.getItem('token');
-  await fetch('/api/posts', {
+  const response = await fetch ('/api/blog', {
       method: 'POST',
       body: JSON.stringify({ title, content }),
       headers: {
         'Content-Type': 'application/json',
-        authorization: `Bearer ${token}`,
-
       },
     });
-    document.location.replace("/dashboard");
+
+    document.location.reload();
   };
 
 const delButtonHandler = async (event) => {
   if (event.target.hasAttribute('blog-id')) {
     const id = event.target.getElementById('blog-id');
 
-    const response = await fetch(`/api/blog/${blog-id}`, {
+    const response = await fetch(`/api/blog/${id}`, {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      }
     });
+    
+  };
 
     if (response.ok) {
       document.location.replace('/dashboard');
@@ -31,12 +34,12 @@ const delButtonHandler = async (event) => {
       alert('Failed to delete blog');
     }
   }
-};
+
 
 document
   .querySelector('.new-blog-form')
   .addEventListener('submit', newFormHandler);
 
 document
-  .querySelector('#delete-btn')
+  .querySelector('.delete-btn')
   .addEventListener('click', delButtonHandler);

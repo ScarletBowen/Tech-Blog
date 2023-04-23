@@ -1,10 +1,18 @@
-<div class="comments">
-    {{#each this}}
-    <section class="comment-info">
-        <div class="comment-data">
-            {{user.username}} on {{format_date created_at}}
-        </div>
-        <div class="comment-text">"{{commentText}}"</div>
-    </section>
-    {{/each}}
-</div>
+{{ Path: views/partials/comments.handlebars }}
+
+{{#each this as |comment|}} 
+  <div class="card">
+    <div class="card-header">
+      <h3>{{comment.user.username}}</h3>
+    </div>
+
+    <div class="card-body">
+      <p>{{comment.comment_text}}</p>
+    </div>
+
+    <div class="card-footer">
+      <p>Created on {{format_date comment.date_created}}</p>
+    </div>
+  </div>
+{{/each}}
+

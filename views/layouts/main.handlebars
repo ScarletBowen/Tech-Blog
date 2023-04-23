@@ -10,23 +10,33 @@
   <script type="module" src="https://unpkg.com/@blaze/atoms@x.x.x/dist/blaze-atoms/blaze-atoms.esm.js"></script>
   <script nomodule="" src="https://unpkg.com/@blaze/atoms@x.x.x/dist/blaze-atoms/blaze-atoms.js"></script>
   <link rel="stylesheet" href="/css/style.css">
+
+
+    {{#if logged_in}}
+    <script src="/js/logout.js"></script>
+    {{/if}}
 </head>
 
-<body class= "bg-{primary} p-4">
+<body>
   <div class="container">
-  <nav >
-    <ul class="c-heading u-xlarge">
-      <li><a href="/">Home</a></li>
-      <li><a href="/dashboard">Dashboard</a></li>
-      <li><a href="/login">Login</a></li>
-      <li><a href="#" id="logout">Logout</a></li>
-    </ul>
-  </nav>
+    <nav>
+      <ul class="c-heading u-xlarge">
+        {{#if logged_in}}
+        <li><a href="/">Home</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><button id="logout">Logout</button></li>
+        {{else}}
+        <li><a href="/">Home</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/login">Login</a></li>
+        {{/if}}
+      </ul>
+    </nav>
 
-  <header class= "p-4 c-heading u-xlarge ">
-    <h1 class=><a href="/">The Tech Blog</a></h1>
-  </header>
-</div>
+    <header class="p-4 c-heading u-xlarge">
+      <h1><a href="/">The Tech Blog</a></h1>
+    </header>
+  </div>
   <main class="p-4 m-4">
     {{{body}}}
   </main>
@@ -34,9 +44,7 @@
   <footer class="border">
     &copy; The Tech Blog 2023
   </footer>
+
 </body>
 
 </html>
-{{#if loggedIn}}
-<script src="/js/logout.js"></script>
-{{/if}}

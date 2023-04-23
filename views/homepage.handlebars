@@ -1,7 +1,35 @@
-<!-- Loop over each object in the projects array -->
-{{#each blogs}}
-  <div class="blog-post">
-    <h2>{{this.title}}</h2>
-    <p>{{this.content}}</p>
+<section class="blog-posts">
+   {{#each blog as |blog|}}
+    <div class="card">
+      <div class="card-header">
+        <h3>{{title}}</h3>
+      </div>
+
+      <div class="card-body">
+        <p>{{content}}</p>
+      </div>
+
+      <div class="card-footer">
+        <p>Created by {{user.username}} on {{format_date date_created}}</p>
+      </div>
+
+{{> comments this.comments }}
+
+    <div class="comment-form" style="display: none;">
+      <form action="/blog/{{blog.id}}/comment" method="POST">
+        <textarea name="content" placeholder="Write a comment"></textarea>
+        <button type="submit">Submit</button>
+    </form>
   </div>
-{{/each}}
+
+    </div>
+
+    <button class="btn btn-primary add-comment-btn" data-blog-id="{{blog.id}}">Add Comment</button>
+
+   {{/each}}
+  </section>
+<script src="/js/logout.js"></script>
+<script src="/js/comment.js"></script>
+
+
+

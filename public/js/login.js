@@ -16,10 +16,11 @@ loginForm.addEventListener('submit', async (event) => {
     },
     body: JSON.stringify({ username, password }),
   });
-console.log(response);
-  // if the response is successful, redirect to the dashboard
+
+  // if the response is successful, redirect to the homepage
   if (response.ok) {
-    document.location.replace ('/dashboard');
+    document.location.replace('/');
+    console.log("user is logged in")
   } else {
     alert('Invalid username or password');
   }
@@ -42,10 +43,11 @@ signupForm.addEventListener('submit', async (event) => {
     },
     body: JSON.stringify({ username, password }),
   });
-  alert('User created');
-  // if the response is successful, redirect to the dashboard
+ 
+ 
   if (response.ok) {
-    document.location.replace ('/dashboard');
+    console.log("user is logged in");
+    document.location.replace('/');
   } else {
     alert('Failed to create user');
   }

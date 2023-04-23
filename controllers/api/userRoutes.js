@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { User, Blog, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-// create sign up user
+// sign up user
 
 router.post('/', async (req, res) => {
   try {
@@ -20,13 +20,20 @@ router.post('/', async (req, res) => {
       req.session.user_id = userData.id;
       req.session.username = userData.username;
       req.session.logged_in = true;
-      
-      res.json({ user: userData, message: 'You are now logged in!' });
+      if (req.session && req.session.logged_in) {
+        // User is logged in, render the homepage
+        res.render('homepage', { user: req.session.user });
+      } else {
+        // User is not logged in, render the login page
+        res.render('login');
+      }
     });
-  } catch (err) {
-    res.status(400).json(err);
   }
+  catch (err) {
+    console.log(err);
+  };
 });
+
 
 
 
@@ -53,13 +60,19 @@ try {
           req.session.user_id = userData.id;
           req.session.username = userData.username;
           req.session.loggedIn = true;
-          res.json({user: userData, message: 'You are logged in!'});
-      });
-  }
-  catch (err) {
-      console.log(err);
-  };
-});
+          if (req.session && req.session.logged_in) {
+            // User is logged in, render the homepage
+            res.render('homepage', { user: req.session.user });
+          } else {
+            // User is not logged in, render the login page
+            res.render('login');
+          }
+        });
+      }
+      catch (err) {
+        console.log(err);
+      };
+    });
 
 // find all users
 router.get('/', (req,res) => {

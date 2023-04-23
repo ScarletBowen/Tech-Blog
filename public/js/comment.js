@@ -1,8 +1,20 @@
-const commentFormHandler = async function(event) {
+
+document.querySelectorAll('.add-comment-btn').forEach(function(button) {
+  button.addEventListener('click', function(event) {
+    const blogId = button.getAttribute('data-blog-id');
+    const commentForm = document.querySelector(`.comment-form[data-blog-id="${blogId}"]`);
+    commentForm.style.display = 'block';
+  });
+});
+
+
+// Get all comment forms and attach event listeners
+document.querySelectorAll('.comment-form').forEach(function(form) {
+  form.addEventListener('submit', async function(event) {
     event.preventDefault();
   
-    const blogId = document.querySelector('input[name="blog-id"]').value;
-    const content = document.querySelector('textarea[name="comment-content"]').value;
+    const blogId = form.querySelector('input[name="blog-id"]').value;
+    const content = form.querySelector('textarea[name="comment-content"]').value;
   
     if (content) {
       await fetch('/api/comment', {
@@ -18,9 +30,5 @@ const commentFormHandler = async function(event) {
   
       document.location.reload();
     }
-  };
-  
-  document
-    .querySelector('#new-comment-form')
-    .addEventListener('submit', commentFormHandler);
-
+  });
+});

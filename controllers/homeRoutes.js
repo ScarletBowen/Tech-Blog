@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 
     // Serialize data so the template can read it
     const blogs = blogData.map((blog) => blog.get({ plain: true }));
-
+    console.log(blogs);
     // Pass serialized data and session flag into template
     res.render('homepage', { 
       blogs, 
@@ -47,6 +47,37 @@ router.get('/blog/:id', async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
+});
+
+router.post("/login", (req, res) => {
+  // find username name that matches request
+    User.findOne({
+      where:{
+      username:req.body.username
+    }
+}).then(foundUser=>{
+  // if username is not found, send message
+      if(!foundUser){
+        return res.status(400).json({msg:"wrong login credentials"})
+      }
+      // compare password with saved hash
+      if(bcrypt.compareSync(req.body.password,foundUser.password)){
+        // if pw matches, create session for user 
+        req.session.user = {
+          id:foundUser.id,
+          username:foundUser.username
+        }
+        return res.json(foundUser)
+        // redirect page
+
+        document.location.replace('/');
+      } else {
+        return res.status(400).json({msg:"wrong login credentials"})
+      }
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json({ msg: "an error occured", err });
+      });
 });
 
 router.get('/login', (req, res) => {

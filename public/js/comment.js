@@ -27,17 +27,21 @@ document.querySelectorAll('.comment-form').forEach(function(form) {
         }
       });
 
-      // Fetch comments and display them
-      const comments = await fetch(`/api/comment=${blogId}`).then(response => response.json());
-      const commentsContainer = form.parentElement.querySelector('.comments');
-      commentsContainer.innerHTML = '';
-      comments.forEach(comment => {
-        const commentElement = document.createElement('div');
-        commentElement.innerHTML = `<p>${comment.content_text}</p><p class="author">Posted by ${comment.author} on ${comment.createdAt}</p>`;
-        commentsContainer.appendChild(commentElement);
-      });
+      if (content) {
+        await fetch('/api/comment', {
+          method: 'GET',
+          body: JSON.stringify({
+            blogId,
+            content
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+      }
     }
   });
 });
+
 
 

@@ -4,7 +4,7 @@ const newFormHandler = async (event) => {
   const title = document.querySelector('input[name="blog-title"]').value.trim();
   const body = document.querySelector('textarea[name="blog-content"]').value.trim();
 
-  const response = await fetch ('/api/blog', {
+  const response = await fetch ('/dashboard', {
       method: 'POST',
       body: JSON.stringify({ title, content }),
       headers: {
@@ -19,7 +19,7 @@ const delButtonHandler = async (event) => {
   if (event.target.hasAttribute('blog-id')) {
     const id = event.target.getElementById('blog-id');
 
-    const response = await fetch(`/api/blog/${id}`, {
+    const response = await fetch(`/dashboard/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

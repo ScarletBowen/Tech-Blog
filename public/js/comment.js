@@ -12,33 +12,26 @@ document.querySelectorAll('.comment-form').forEach(function(form) {
   form.addEventListener('submit', async function(event) {
     event.preventDefault();
   
-    const blogId = form.querySelector('input[name="blog-id"]').value;
-    const content = form.querySelector('textarea[name="comment-content"]').value;
-  
-    if (content) {
+    const blog_id= form.querySelector('input[name="blog-id"]').value;
+    const comment_text = form.querySelector('textarea[name="comment-content"]').value;
+    
+    console.log("comment_text");
+
+    if (comment_text) {
       await fetch('/api/comment', {
         method: 'POST',
         body: JSON.stringify({
-          blogId,
-          content
+          blog_id,
+          comment_text,
         }),
+        
         headers: {
           'Content-Type': 'application/json'
+         
         }
       });
 
-      if (content) {
-        await fetch('/api/comment', {
-          method: 'GET',
-          body: JSON.stringify({
-            blogId,
-            content
-          }),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-      }
+      document.location.reload();
     }
   });
 });

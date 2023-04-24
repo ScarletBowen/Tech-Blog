@@ -3,7 +3,7 @@ const { Blog, User, Comment } = require("../models");
 const withAuth = require("../utils/auth");
 
 // get existing blogs
-router.get('/dashboard', withAuth, async (req, res) => {
+router.get('/', withAuth, async (req, res) => {
   try {
     const blogData = await Blog.findAll({
       where: { user_id: req.session.user_id },
@@ -12,7 +12,6 @@ router.get('/dashboard', withAuth, async (req, res) => {
     const blogs = blogData.map((blog) => blog.get({ plain: true }));
     res.render('dashboard', {
       blogs,
-      username: req.session.user.username
     });
   } catch (err) {
     res.status(500).json(err);
@@ -92,7 +91,7 @@ router.delete('/:id', withAuth, async (req, res) => {
 });
 
 router.get('/new', withAuth, (req, res) => {
-  res.render('new-blog', { username: req.session.user.username });
+  res.render('newBlog', { username: req.session.user.username });
 });
 
 router.post('/new', withAuth, async (req, res) => {

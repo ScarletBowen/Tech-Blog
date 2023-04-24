@@ -21,15 +21,12 @@
   <div class="container">
     <nav>
       <ul class="c-heading u-xlarge">
-        {{#if logged_in}}
+      
         <li><a href="/">Home</a></li>
         <li><a href="/dashboard">Dashboard</a></li>
+         <li><a href="/login">Login</a></li>
         <li><button class="btn btn-primary" id="logout">Logout</button></li>
-        {{else}}
-        <li><a href="/">Home</a></li>
-        <li><a href="/dashboard">Dashboard</a></li>
-        <li><a href="/login">Login</a></li>
-        {{/if}}
+         
       </ul>
     </nav>
 

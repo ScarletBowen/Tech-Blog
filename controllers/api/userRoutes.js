@@ -56,7 +56,7 @@ try {
       req.session.save(() => {
           req.session.user_id = userData.id;
           req.session.username = userData.username;
-          req.session.loggedIn = true;
+          req.session.logged_in = true;
           if (req.session && req.session.logged_in) {
             // User is logged in, render the homepage
             res.render('homepage', { user: req.session.user });
@@ -113,7 +113,7 @@ router.get('/:id', (req,res) => {
 
 //logout
 router.post('/logout', (req, res) => {
-    if(req.session.loggedIn) {
+    if(req.session.logged_in) {
         req.session.destroy(() => {
             res.status(204).end();
         })

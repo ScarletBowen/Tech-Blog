@@ -10,11 +10,6 @@
   <script type="module" src="https://unpkg.com/@blaze/atoms@x.x.x/dist/blaze-atoms/blaze-atoms.esm.js"></script>
   <script nomodule="" src="https://unpkg.com/@blaze/atoms@x.x.x/dist/blaze-atoms/blaze-atoms.js"></script>
   <link rel="stylesheet" href="/css/style.css">
-
-
-    {{#if logged_in}}
-    <script src="/js/logout.js"></script>
-    {{/if}}
 </head>
 
 <body>
@@ -42,6 +37,9 @@
     &copy; The Tech Blog 2023
   </footer>
 
+    {{#if logged_in}}
+    <script src="/js/logout.js"></script>
+    {{/if}}
 </body>
 
 </html>

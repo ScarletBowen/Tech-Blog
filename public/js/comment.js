@@ -18,7 +18,8 @@ document.querySelectorAll('.comment-form').forEach(function(form) {
     console.log("comment_text");
 
     if (comment_text) {
-      await fetch('/api/comment', {
+      const response = await fetch('/api/comment', {
+        
         method: 'POST',
         body: JSON.stringify({
           blog_id,
@@ -29,7 +30,9 @@ document.querySelectorAll('.comment-form').forEach(function(form) {
           'Content-Type': 'application/json'
          
         }
+
       });
+      console.log(response);
 
       document.location.reload();
     }

@@ -2,37 +2,26 @@ const router = require("express").Router();
 const { Comment } = require("../../models/");
 const withAuth = require("../../utils/auth");
 
-router.post("/", withAuth, (req, res) => {
-  Comment.create({ ...req.body, 
-    user_id: req.session.user_id, 
-    blog_id:req.body.blog_id })
-    .then(newComment => {
-      res.json(newComment);
-    })
-    .catch(err => {
-      res.status(500).json(err);
-    });
-});
-router.get("/", (req, res) => {
-  const { blogId } = req.query;
-  Comment.findAll({ where: { blogId } })
-    .then(comments => {
-      res.json(comments);
-    })
-    .catch(err => {
-      res.status(500).json(err);
-    });
+router.post("/", async (req, res) => {
+  try {
+  const newComment = await Comment.create({ ...req.body, 
+    user_id: req.session.user_id })
+      if (newComment) res.json(newComment);
+  } catch (err) {
+    console.log(err)
+  }
 });
 
-// router.get("/", (req, res) => {
-//   Comment.findAll({ include: { User, Blog } })
-//     .then(comments => {
-//       res.json(comments);
-//     })
-//     .catch(err => {
-//       res.status(500).json(err);
-//     });
-// });
+router.get("/", async (req, res) => {
+  try {
+    const comments = await Comment.findAll({ where: { blog_id } });
+    res.json(comments);
+  }
+  catch(err) {
+      console.log(err);
+
+  }
+});
 
 
 router.get("/:id", (req, res) => {

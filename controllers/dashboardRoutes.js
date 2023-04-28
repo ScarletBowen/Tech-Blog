@@ -2,8 +2,15 @@ const router = require("express").Router();
 const { Blog, User, Comment } = require("../models");
 const withAuth = require("../utils/auth");
 
+
+// new blog get
+router.get('/new', async (req, res) => {
+  
+  res.render('newBlog', { username: req.session.username });
+});
+
 // get existing blogs
-router.get('/', withAuth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const blogData = await Blog.findAll({
       where: { user_id: req.session.user_id },
@@ -17,8 +24,8 @@ router.get('/', withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
-
-router.get('/blog/:id', withAuth, async (req, res) => {
+// get single blog
+router.get('/single/:id', withAuth, async (req, res) => {
   try {
     const blogData = await Blog.findByPk(req.params.id, {
       include: [
@@ -33,14 +40,15 @@ router.get('/blog/:id', withAuth, async (req, res) => {
     const blog = blogData.get({ plain: true });
     res.render('blog', {
       blog,
-      username: req.session.user.username
+      username: req.session.username
     });
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-router.get('/edit/:id', withAuth, async (req, res) => {
+// edit blog get
+router.get('/single/:id', withAuth, async (req, res) => {
   try {
     const blogData = await Blog.findByPk(req.params.id);
     if (!blogData) {
@@ -50,13 +58,13 @@ router.get('/edit/:id', withAuth, async (req, res) => {
     const blog = blogData.get({ plain: true });
     res.render('edit-blog', {
       blog,
-      username: req.session.user.username
+      username: req.session.username
     });
   } catch (err) {
     res.status(500).json(err);
   }
 });
-
+// edit blog post
 router.post('/edit/:id', withAuth, async (req, res) => {
   try {
     const blogData = await Blog.update(req.body, {
@@ -72,6 +80,7 @@ router.post('/edit/:id', withAuth, async (req, res) => {
   }
 });
 
+// delete blog
 router.delete('/:id', withAuth, async (req, res) => {
   try {
     const blogData = await Blog.destroy({
@@ -89,21 +98,4 @@ router.delete('/:id', withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
-
-router.get('/new', withAuth, (req, res) => {
-  res.render('newBlog', { username: req.session.user.username });
-});
-
-router.post('/new', withAuth, async (req, res) => {
-  try {
-    const newBlog = await Blog.create({
-      ...req.body,
-      user_id: req.session.user_id
-    });
-    res.status(200).json(newBlog);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
 module.exports = router;

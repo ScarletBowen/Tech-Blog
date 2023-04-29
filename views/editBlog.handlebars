@@ -1,0 +1,24 @@
+<header class="p-4 c-heading u-xlarge">
+  <h1>Edit Blog Post</h1>
+</header>
+
+<form class="new-blog-form">
+  <div class="form-group">
+    <label for="title-input">Title:</label>
+    <input type="text" class="form-control" id="title-input" name="title" value="{{blog.title}}">
+  </div>
+  <div class="form-group">
+    <label for="content-input">Content:</label>
+    <textarea class="form-control" id="content-input" name="content" rows="10">{{blog.content}}</textarea>
+  </div>
+  <button type="submit" class="btn btn-primary update-btn" data-id="{{blog.id}}">Update</button>
+  <button type="button" class="btn btn-danger delete-btn" data-id="{{blog.id}}">Delete</button>
+</form>
+
+<footer class="footer flex-row justify-center">
+  <a href="/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+</footer>
+
+
+<script src="/js/edit.js"></script>
+<script src="/js/delete.js"></script>

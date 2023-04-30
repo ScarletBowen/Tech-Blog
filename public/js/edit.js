@@ -1,15 +1,15 @@
 const editFormHandler = async function(event){
     event.preventDefault();
 
-    const title = document.getElementById('blog-title');
-    const content = document.getElementById('blog-body');
+    const title = document.querySelector('.blog-title').value;
+    const content = document.querySelector('.blog-content').value;
     const id = event.target.getAttribute('data-id');
 
-    fetch (`/edit/${id}`, {
+    fetch (`/api/blog/edit/${id}`, {
         method: "PUT", 
         body: JSON.stringify({
-            title: title.value,
-            content: content.value
+            title,
+            content
         }),
         headers: { "Content-Type": "application/json"}
     })
@@ -19,4 +19,4 @@ const editFormHandler = async function(event){
         .catch(err => console.log(err))
 }
 
-document.querySelector(".edit-btn").addEventListener("click", editFormHandler);
+document.querySelector(".update-btn").addEventListener("click", editFormHandler);

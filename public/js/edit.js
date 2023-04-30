@@ -5,7 +5,7 @@ const editFormHandler = async function(event){
     const content = document.getElementById('blog-body');
     const id = event.target.getAttribute('data-id');
 
-    fetch (`/dashboard/${id}`, {
+    fetch (`/edit/${id}`, {
         method: "PUT", 
         body: JSON.stringify({
             title: title.value,

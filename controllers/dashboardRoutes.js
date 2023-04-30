@@ -41,9 +41,9 @@ router.get('/', async (req, res) => {
 
 
 // get single blog for editing
-router.get('/blog/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
-    const blogData = await Post.findByPk(req.params.id, {
+    const blogData = await Blog.findByPk(req.params.id, {
       include: [
           {
               model: User,
@@ -67,15 +67,15 @@ router.get('/blog/:id', async (req, res) => {
   }
 });
 
-router.put('/edit/:id', withAuth, async (req, res) => {
-  try {
-    const updatedBlog = await Blog.update(req.body, {
-      where: { id: req.params.id }
-    });
-    res.status(200).json(updatedBlog);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+// router.put('/edit/:id', withAuth, async (req, res) => {
+//   try {
+//     const updatedBlog = await Blog.update(req.body, {
+//       where: { id: req.params.id }
+//     });
+//     res.status(200).json(updatedBlog);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 module.exports = router;

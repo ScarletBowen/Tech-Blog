@@ -41,7 +41,7 @@ router.get('/', async (req, res) => {
 
 
 // get single blog for editing
-router.get('/:id', async (req, res) => {
+router.get('/edit/:id', async (req, res) => {
   try {
     const blogData = await Blog.findByPk(req.params.id, {
       include: [
@@ -51,17 +51,13 @@ router.get('/:id', async (req, res) => {
           },
       ],
   });
-  req.session.blog_id = req.params.id;
   const blog = blogData.get({ plain: true });
-  res.render('blog', {
-      ...blog,
-      currentUser: {
-        id: req.session.user_id
-      },
+  res.render('editBlog', {
+      ...blog, 
+      CurrentUser: {id: req.session.user_id
+  },
   });
-
-    res.status(200).json(blogData);
-
+    // res.status(200).json(blogData);
   } catch (err) {
     res.status(500).json(err);
   }

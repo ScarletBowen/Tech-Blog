@@ -1,4 +1,4 @@
-<header class="p-4 c-heading u-xlarge">
+<header d-flex justify-content-between align-items-center class="p-4 c-heading u-xlarge">
       <h1><a href="/">The Tech Blog</a></h1>
 </header>
 
@@ -18,18 +18,20 @@
       </div>
 
 {{> comments blog.comments }}
-    <div class="comment-form">
+
+    <div class="comment-form" data-blog-id="{{blog.id}}" style="display: none;">
       <form action="/blog/{{blog.id}}/comment" method="POST">
-        <textarea name="comment-content" placeholder="Write a comment"></textarea>
+        <textarea class= "comment-text" name="comment-content" placeholder="Write a comment"></textarea>
         <input type="hidden" name="blog-id" value="{{blog.id}}">
-        <button class="btn btn-primary" type="submit">Submit</button>
+        <button type="button" class="c-button c-button--info" type="submit">Submit</button>
       </form>
     </div>
 
     </div>
 
-    <button class="btn btn-primary add-comment-btn" data-blog-id="{{blog.id}}">Add Comment</button>
+    <button type="button" class="c-button add-comment-btn u-small" data-blog-id="{{blog.id}}">Add Comment</button>
 
+    </div>
    {{/each}}
   </section>
 <script src="/js/comment.js"></script>

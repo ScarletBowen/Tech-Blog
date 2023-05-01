@@ -2,6 +2,14 @@ const router = require('express').Router();
 const { User, Blog, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
+
+
+// Check if user is authenticated
+router.get('/check-auth', withAuth, (req, res) => {
+    res.status(200).json({ message: 'User is authenticated' });
+  });
+
+  
 // sign up user
 
 router.post('/', async (req, res) => {

@@ -1,9 +1,9 @@
 <header d-flex justify-content-between align-items-center class="p-4 c-heading u-xlarge">
-      <h1><a href="/">The Tech Blog</a></h1>
+  <h1><a href="/">The Tech Blog</a></h1>
 </header>
 
 <section class="blog-posts">
-   {{#each blogs as |blog|}}
+  {{#each blogs}}
     <div class="card">
       <div class="card-header">
         <h3>{{title}}</h3>
@@ -17,24 +17,35 @@
         <p>Created by {{user.username}} on {{format_date date_created}}</p>
       </div>
 
-{{> comments blog.comments }}
+      {{#if comments.[this.id]}}
+        <div class="comments">
+          {{> comments comments.[this.id]}}
+        </div>
+      {{/if}}
 
-    <div class="comment-form" data-blog-id="{{blog.id}}" style="display: none;">
-      <form action="/blog/{{blog.id}}/comment" method="POST">
-        <textarea class= "comment-text" name="comment-content" placeholder="Write a comment"></textarea>
-        <input type="hidden" name="blog-id" value="{{blog.id}}">
-        <button class="c-button c-button--info" type="submit">Submit</button>
-      </form>
+      <div class="comment-form" data-blog-id="{{this.id}}" style="display: none;">
+        <form action="/blog/{{this.id}}/comment" method="POST">
+          <textarea class="comment-text" name="comment-content" placeholder="Write a comment"></textarea>
+          <input type="hidden" name="blog-id" value="{{this.id}}">
+          <button class="c-button c-button--info" type="submit">Submit</button>
+        </form>
+      </div>
+
+      <button type="button" class="c-button add-comment-btn u-small" data-blog-id="{{this.id}}">Add Comment</button>
+
+      {{#if comments.[this.id]}}
+      <div class="comments">
+        <h4>Comments</h4>
+        {{#each comments.[this.id]}}
+          <div class="comment">
+            <p><strong>{{user.username}}</strong>: {{comment_text}}</p>
+          </div>
+        {{/each}}
+      </div>
+      {{/if}}
     </div>
-
-    </div>
-
-    <button type="button" class="c-button add-comment-btn u-small" data-blog-id="{{blog.id}}">Add Comment</button>
-
-    </div>
-   {{/each}}
-  </section>
+  {{/each}}
+</section>
+<script src="https://cdn.jsdelivr.net/npm/handlebars/dist/handlebars.min.js"></script>
 <script src="/js/comment.js"></script>
-
-
 

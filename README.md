@@ -33,4 +33,6 @@ express-session
 
 ### Usage and Previews:
 
-To access the deployed project, visit: url
+To access the deployed project, visit: url: https://desolate-depths-78640.herokuapp.com/
+
+![techblogscreen](https://user-images.githubusercontent.com/109751916/236339355-da7706e8-6f1a-45b7-ab13-5e0218495452.png)

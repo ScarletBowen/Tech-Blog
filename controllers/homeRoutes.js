@@ -12,14 +12,6 @@ router.get('/', async (req, res) => {
           model: User,
           attributes: ['username'],
         },
-        {
-          model: Comment,
-          attributes:['comment_text', 'user_id'],
-          include:{
-            model:User,
-            attributes:['username']
-          },
-        }
       ],
     });
 
@@ -38,8 +30,29 @@ router.get('/', async (req, res) => {
 
 router.get('/blog/:id', async (req, res) => {
   try {
-    const blogData = await Blog.findByPk(req.params.id, {
+    const blogData = await Blog.findOne({
+      where: {
+        id: req.params.id,
+      },
+      attributes: [
+        'id',
+        'title',
+        'content',
+      ],
       include: [
+        {
+          model: Comment,
+          attributes: [
+            'id',
+            'comment_text',
+            'blog_id',
+            'user_id',
+          ],
+          include: {
+            model: User,
+            attributes: ['username'],
+          },
+        },
         {
           model: User,
           attributes: ['username'],
@@ -47,16 +60,22 @@ router.get('/blog/:id', async (req, res) => {
       ],
     });
 
+    if (!blogData) {
+      res.status(404).json({ message: 'No blog found with this id' });
+      return;
+    }
+
     const blog = blogData.get({ plain: true });
 
     res.render('blog', {
       ...blog,
-      logged_in: req.session.logged_in
     });
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });
+
 
 router.post("/login", (req, res) => {
   // find username name that matches request
@@ -95,8 +114,7 @@ router.get('/login', (req, res) => {
     res.redirect('/');
     return;
   }
-
-  res.render('login');
+  res.render("login");
 });
 
 router.get('/signup', (req, res) => {

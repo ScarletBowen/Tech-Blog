@@ -7,7 +7,7 @@ router.post("/", async (req, res) => {
     return res.status(401).json({ msg: "Please log in to comment." });
   } else {
   try {
-  const newComment = await Comment.create({ ...req.body, userId: req.session.user_id});
+  const newComment = await Comment.create({ ...req.body, user_id: req.session.user_id});
       if (newComment) res.json(newComment);
   } catch (err) {
     console.log(err)
